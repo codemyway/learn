@@ -1,20 +1,38 @@
 import socket
+import threading
+from queue import Queue
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+print_lock = threading.Lock()
 
-'''Server name goes below'''
-server = 'address of the sites goes here'     
+target = 'pythonprogramming.net'
 
-def pscan(port):
+def portscan(port):
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
-        s.connect((server,port))
-        return True
+        con = s.connect((target,port))
+        with print_lock:
+            print('port ',port,' is open')
+        con.close()
     except:
-        return False
+        pass
 
-for x in range(1,26):
-    if pscan(x):
-        print('port',x,'is open')
-    else:
-        print('port',x,' is closed')
+
+def threader():
+    while True:
+        worker = q.get()
+        portscan(worker)
+        q.task_done()
+
+q = Queue()
+for x in range(100):
+    t = threading.Thread(target=threader)
+    t.daemon = True
+    t.start()
+
+
+for worker in range(1,101):
+    q.put(worker)
+
+q.join()
+    
 
