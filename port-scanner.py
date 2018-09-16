@@ -3,7 +3,7 @@ import socket
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 '''Server name goes below'''
-server = 'pythonprogramming.net'     
+server = 'address of the sites goes here'     
 
 def pscan(port):
     try:
