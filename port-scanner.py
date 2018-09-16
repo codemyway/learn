@@ -2,7 +2,8 @@ import socket
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-server = 'pythonprogramming.net'
+'''Server name goes below'''
+server = 'pythonprogramming.net'     
 
 def pscan(port):
     try:
